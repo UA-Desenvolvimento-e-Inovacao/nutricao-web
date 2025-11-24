@@ -6,7 +6,7 @@ const AUTH_COOKIE_NAME = 'token';
 
 export function middleware(request: NextRequest) {  
   
-  console.log(request.nextUrl);
+  // console.log(request.nextUrl);
   
   
   // // 2. Pegar o cookie da requisição
