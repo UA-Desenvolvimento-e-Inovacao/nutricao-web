@@ -2,5 +2,5 @@ import { redirect } from "next/navigation";
 
 export default function Home() {
   // redirect to login page when accessing the root path
-  redirect('/login');
+  redirect('/paciente');
 }
