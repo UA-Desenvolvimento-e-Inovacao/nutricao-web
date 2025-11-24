@@ -2,7 +2,7 @@
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { useState, ChangeEvent } from 'react';
-import logo from './../../../public/logoLogin.png';
+import logo from './../../../public/assets/logoLogin.png';
 
 export default function Login() {
   

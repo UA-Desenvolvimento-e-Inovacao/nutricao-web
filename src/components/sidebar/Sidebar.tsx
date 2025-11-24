@@ -5,7 +5,7 @@ import { ChevronDown, Users, Apple, FileText, ChevronLeft, ChevronRight, Tag, Ha
 import Image from 'next/image';
 import Link from 'next/link'; // Importante: Usar Link ao invés de tag <a>
 import { usePathname } from 'next/navigation'; // Importante: Para pegar a rota atual
-import logo from './../../../public/logoLogin.png';
+import logo from './../../../public/assets/logoLogin.png';
 
 export default function Sidebar() {
   // Inicializa nulo, pois o useEffect vai decidir quem abre
@@ -197,7 +197,7 @@ export default function Sidebar() {
                               href={subItem.path}
                               className={`
                                 flex items-center gap-3 p-2 rounded-lg text-sm
-                                transition-colors block
+                                transition-colors
                                 ${isActiveSubItem 
                                   ? 'text-green-700 font-semibold bg-green-50/50' 
                                   : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
