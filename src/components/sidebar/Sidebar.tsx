@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import { ChevronDown, Users, Apple, FileText, ChevronLeft, ChevronRight, Tag, HandPlatter, Settings, Settings2,   } from 'lucide-react';
+import Image from 'next/image';
+import logo from './../../../public/logoLogin.png'
 
 export default function Sidebar() {
   const [expandedMenu, setExpandedMenu] = useState('pacientes');
@@ -89,17 +91,17 @@ export default function Sidebar() {
       <button
         onClick={toggleSidebar}
         className="
-          absolute -right-3 top-6 bg-white border border-gray-300 
-          rounded-full p-1.5 shadow-md hover:bg-gray-50
+          absolute -right-3 top-6 bg-white border border-[#77C526]
+          rounded-full p-1.5 shadow-md hover:bg-[#EDFFDA]
           transition-colors z-10 cursor-pointer
         "
         title={isCollapsed ? 'Expandir menu' : 'Recolher menu'}
       >
-        {isCollapsed ? <ChevronRight color='gray' size={16} /> : <ChevronLeft color='gray' size={16} />}
+        {isCollapsed ? <ChevronRight color='#1D2A0F' size={16} /> : <ChevronLeft color='#1D2A0F' size={16} />}
       </button>
 
       {/* Header */}
-      <div className="mb-6 pb-4 border-b border-gray-200">
+      <div className="mb-6 pb-4 border-b border-gray-200/40 flex justify-center">
         {isCollapsed ? (
           <div className="flex justify-center">
             <div className="w-8 h-8 bg-green-600 rounded-lg flex items-center justify-center">
@@ -107,7 +109,8 @@ export default function Sidebar() {
             </div>
           </div>
         ) : (
-          <h3 className="text-xl font-bold text-gray-800">Sistema Nutrição</h3>
+          <Image loading='eager' src={logo} alt='Logo' width={150} height={150} sizes='50vw'/>
+          // <h3 className="text-xl font-bold text-gray-800 text-center">Sistema Nutrição</h3>
         )}
       </div>
 
@@ -219,7 +222,7 @@ export default function Sidebar() {
               className="p-2 hover:bg-gray-100 rounded-lg transition-colors cursor-pointer"
               title="Configurações"
             >
-              <Settings size={20} className="text-gray-600" />
+              <Settings size={20} color='#1D2A0F' className="text-gray-600" />
             </button>
           </div>
         )}
