@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, startTransition } from 'react';
 import { ChevronDown, Users, Apple, FileText, ChevronLeft, ChevronRight, Tag, HandPlatter, Settings } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link'; // Importante: Usar Link ao invés de tag <a>
@@ -9,8 +9,8 @@ import logo from './../../../public/logoLogin.png';
 
 export default function Sidebar() {
   // Inicializa nulo, pois o useEffect vai decidir quem abre
-  const [expandedMenu, setExpandedMenu] = useState(null);
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [expandedMenu, setExpandedMenu] = useState<string | null>(null);
+  const [isCollapsed, setIsCollapsed] = useState<boolean | null>(false);
   
   const pathname = usePathname(); // Hook para pegar a URL atual
 
@@ -78,13 +78,19 @@ export default function Sidebar() {
       );
       
       if (activeMenu) {
-        setExpandedMenu(activeMenu.id);
+        // Use startTransition to schedule a non-urgent update and avoid synchronous cascading renders,
+        // and only update if the value actually changes.
+        startTransition(() => {
+          setExpandedMenu(prev => prev === activeMenu.id ? prev : activeMenu.id);
+        });
       }
     }
   }, [pathname, isCollapsed]);
 
-  const toggleMenu = (menuName) => {
-    setExpandedMenu(expandedMenu === menuName ? null : menuName);
+  const toggleMenu = (menuName: string) => {
+    if(menuName){
+      setExpandedMenu(expandedMenu === menuName ? null : menuName);
+    }
   };
 
   const toggleSidebar = () => {
