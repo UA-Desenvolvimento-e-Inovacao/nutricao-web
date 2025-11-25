@@ -1,5 +1,5 @@
 'use client'
-import { ChangeEvent } from 'react'
+import { ChangeEvent, Suspense } from 'react' // 1. Importe o Suspense
 import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 
 const setores = [
@@ -11,30 +11,24 @@ const setores = [
   {codSetor: 6, nmSetor: 'Pediatria'}
 ]
 
-export default function SelectSetor() {
+// 2. Renomeie seu componente original para algo interno (ex: SelectSetorContent)
+function SelectSetorContent() {
   const searchParams = useSearchParams()
   const pathname = usePathname()
   const router = useRouter()
 
-  // console.log(searchParams.get('setor')); usar no componente pai, na pagina.
-  
-
-  // Pega o valor atual da URL (ex: ?setor=5) para manter o select sincronizado
   const setorAtual = searchParams.get('setor') || ''
 
   const handleSetor = (e: ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value
-    
-    // Cria uma cópia dos parametros atuais da URL
     const params = new URLSearchParams(searchParams.toString())
 
     if (value) {
-      params.set('setor', value) // Adiciona ?setor=X
+      params.set('setor', value)
     } else {
-      params.delete('setor') // Remove o parametro se selecionar "Todos"
+      params.delete('setor')
     }
 
-    // Atualiza a URL sem recarregar a página totalmente (replace)
     router.replace(`${pathname}?${params.toString()}`)
   }
 
@@ -42,7 +36,7 @@ export default function SelectSetor() {
     <select
       onChange={handleSetor}
       value={setorAtual}
-      className="w-30 border border-[#cdf5a2] py-2 text-[#213F02] bg-transparent  rounded-2xl
+      className="w-30 border border-[#cdf5a2] py-2 text-[#213F02] bg-transparent rounded-2xl
       focus:border-[#77C526] hover:border-[#77C526] transition focus:outline-none shadow-md text-center appearance-none cursor-pointer"
     >
       <option value="">Setores</option>
@@ -52,5 +46,15 @@ export default function SelectSetor() {
         </option>
       ))}
     </select>
+  )
+}
+
+// 3. Exporte o componente default com o Suspense em volta
+export default function SelectSetor() {
+  return (
+    // O fallback é o que aparece por milissegundos enquanto a URL é lida
+    <Suspense fallback={<div className="w-30 h-10 bg-gray-100 rounded-2xl animate-pulse"></div>}>
+      <SelectSetorContent />
+    </Suspense>
   )
 }

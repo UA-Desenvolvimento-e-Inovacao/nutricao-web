@@ -6,6 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link'; // Importante: Usar Link ao invés de tag <a>
 import { usePathname } from 'next/navigation'; // Importante: Para pegar a rota atual
 import logo from './../../../public/assets/logoLogin.png';
+import logoFolha from './../../../public/assets/folha.png';
 
 export default function Sidebar() {
   // Inicializa nulo, pois o useEffect vai decidir quem abre
@@ -125,8 +126,9 @@ export default function Sidebar() {
       <div className="mb-6 pb-4 border-b border-gray-200/40 flex justify-center">
         {isCollapsed ? (
           <div className="flex justify-center">
-            <div className="w-8 h-8 bg-green-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">SN</span>
+            <div className="w-9 h-15  rounded-lg flex items-center justify-center">
+              <Image src={logoFolha} width={50} height={50} alt='logo de folha'/>
+              {/* <span className="text-white font-bold text-sm">SN</span> */}
             </div>
           </div>
         ) : (
