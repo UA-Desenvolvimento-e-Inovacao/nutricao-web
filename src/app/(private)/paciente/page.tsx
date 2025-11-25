@@ -50,10 +50,10 @@ function Paciente() {
             return (
               <li
                 key={paciente.id}
-                className="flex flex-row items-center gap-4 md:gap-8 my-2 bg-white border-l-4 border-gray-200 py-1 px-1 rounded cursor-pointer 
+                className="flex flex-row items-center gap-4 md:gap-8 my-2 bg-white border-l-4 border-gray-200 px-2 p-1 rounded cursor-pointer 
                   hover:border-[#77C526] transition-colors duration-200 shadow hover:shadow-md"
               >
-                <div className="flex items-center justify-center text-[#355D0B] font-light bg-gray-200 size-15 min-w-15 rounded-full">
+                <div className="flex items-center justify-center text-[#355D0B] font-light bg-gray-200 size-12 min-w-12 rounded-full">
                   <span className="text-2xl">{paciente.nome.at(0)}</span>
                 </div>
 
@@ -85,7 +85,7 @@ function Paciente() {
                 className={`px-3 py-1 rounded-md text-sm font-medium transition-colors
                     ${paginaAtual === 1 
                     ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
-                    : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300'}`}
+                    : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300 cursor-pointer'}`}
                 >
                 Anterior
                 </button>
@@ -96,7 +96,7 @@ function Paciente() {
                 className={`px-3 py-1 rounded-md text-sm font-medium transition-colors
                     ${paginaAtual === totalPaginas 
                     ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
-                    : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300'}`}
+                    : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300 cursor-pointer'}`}
                 >
                 Próximo
                 </button>
