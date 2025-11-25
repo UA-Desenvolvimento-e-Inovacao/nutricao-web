@@ -4,7 +4,7 @@ import type { NextRequest } from 'next/server';
 // 1. O nome do cookie que você usa para armazenar a sessão
 const AUTH_COOKIE_NAME = 'token';
 
-export function middleware(request: NextRequest) {  
+export function proxy(request: NextRequest) {  
   
   // console.log(request.nextUrl);
   
