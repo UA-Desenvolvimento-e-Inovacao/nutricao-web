@@ -103,7 +103,7 @@ export default function Sidebar() {
   return (
     <nav 
       className={`
-        bg-white min-h-screen p-4 border border-red-50 relative
+        bg-white h-full p-4 border border-red-50 relative
         transition-all duration-300 ease-in-out flex flex-col
         ${isCollapsed ? 'w-20' : 'w-80'}
       `}
