@@ -1,6 +1,6 @@
 import ListagemPaciente from '@/src/components/paciente/ListagemPaciente';
 
-function Paciente() {
+function Pacientes() {
   return (
     <section className='flex flex-col h-full p-2'>
      <ListagemPaciente/>
@@ -8,4 +8,4 @@ function Paciente() {
   )
 }
 
-export default Paciente
+export default Pacientes

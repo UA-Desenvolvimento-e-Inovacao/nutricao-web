@@ -10,9 +10,10 @@ function ListagemPaciente() {
       { id: 26587, nome: "Carlos Eduardo Silva", idade: 58, sexo: "Masculino", motivoConsulta: "Dores nas costas", ativo: true, dieta: true },
       { id: 32214, nome: "Mariana Costa", idade: 22, sexo: "Feminino", motivoConsulta: "Exames de sangue", ativo: true, dieta: false },
       { id: 46555, nome: "Roberto Mendes 1", idade: 45, sexo: "Masculino", motivoConsulta: "Retorno cardiologista", ativo: true, dieta: false },
-      { id: 46595, nome: "Roberto Mendes 2", idade: 45, sexo: "Masculino", motivoConsulta: "Retorno cardiologista", ativo: true, dieta: false },
-      { id: 46584, nome: "Roberto Mendes 3", idade: 45, sexo: "Masculino", motivoConsulta: "Retorno cardiologista", ativo: true, dieta: false },
-      { id: 85584, nome: "Roberto Mendes 4", idade: 45, sexo: "Masculino", motivoConsulta: "Retorno cardiologista", ativo: true, dieta: false }
+      { id: 46595, nome: "Carla Mendes", idade: 45, sexo: "Masculino", motivoConsulta: "Retorno cardiologista", ativo: true, dieta: false },
+      { id: 46584, nome: "Cristiano Mendes", idade: 45, sexo: "Masculino", motivoConsulta: "Retorno cardiologista", ativo: true, dieta: false },
+      { id: 85584, nome: "Paulo Mendes", idade: 45, sexo: "Masculino", motivoConsulta: "Retorno cardiologista", ativo: true, dieta: false },
+      { id: 85333, nome: "Gustavo barreto", idade: 25, sexo: "Feminino", motivoConsulta: "Retorno cardiologista", ativo: true, dieta: true }
     ];
   // Estado da Paginação
   const [paginaAtual, setPaginaAtual] = useState(1);

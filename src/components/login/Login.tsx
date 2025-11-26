@@ -1,91 +1,48 @@
 'use client';
-import { useRouter } from 'next/navigation';
+
 import Image from 'next/image';
-import { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent, useEffect } from 'react';
+import { useActionState } from 'react'; // React 19 ou Next 14/15
+import { useRouter } from 'next/navigation';
 import logo from './../../../public/assets/logoLogin.png';
+import login, { LoginState } from '@/src/actions/login'; // Importe a Action e o Tipo
+
+const initialState: LoginState = {
+  status: null,
+  message: '',
+};
 
 export default function Login() {
-  
-  const [cpf, setCpf] = useState('');
-  const [senha, setSenha] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
   const router = useRouter();
   
-  const formatCPF = (value: string) => {
-    console.log(value);
-    
-    const numbers = value.replace(/\D/g, '');
-    if (numbers.length <= 11) {
-      return numbers
-        .replace(/(\d{3})(\d)/, '$1.$2')
-        .replace(/(\d{3})(\d)/, '$1.$2')
-        .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+  // Hook do Server Action
+  const [state, formAction, isPending] = useActionState(login, initialState);
+
+  // Estados apenas para controle visual do input (máscara)
+  const [cpf, setCpf] = useState('');
+  const [senha, setSenha] = useState('');
+
+  // Efeito para redirecionar em caso de sucesso
+  useEffect(() => {
+    if (state.status === 'success') {
+      console.log('Login OK, dados:', state.data);
+      router.push('/dashboard'); // Redirecionamento no cliente
     }
-    return cpf;
+  }, [state.status, router, state.data]);
+
+  // Função de máscara do CPF
+  const formatCPF = (value: string) => {
+    const numbers = value.replace(/\D/g, ''); // Remove tudo que não é número
+    return numbers
+      .replace(/(\d{3})(\d)/, '$1.$2')
+      .replace(/(\d{3})(\d)/, '$1.$2')
+      .replace(/(\d{3})(\d{1,2})$/, '$1-$2')
+      .substring(0, 14); // Limita tamanho
   };
 
   const handleCpfChange = (e: ChangeEvent<HTMLInputElement>) => {
     const formatted = formatCPF(e.target.value);
     setCpf(formatted);
-    setError(''); // Limpa erro ao digitar
-  };
-
-  const handleSenhaChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSenha(e.target.value);
-    setError(''); // Limpa erro ao digitar
-  };
-
-  async function handleSubmit ()  {
-    console.log('submit', { cpf, senha });
-    // Validação dos campos
-    if (!cpf || !senha) {
-      setError('Preencha todos os campos');
-      return;
-    }
-
-    // Validação de CPF (verifica se tem 14 caracteres com formatação)
-    if (cpf.length !== 14) {
-      setError('CPF inválido');
-      return;
-    }
-    
-    setIsLoading(true);
-    setError('');
-    console.log('teste');
-    
-    try {
-      const res = await fetch('/api/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ cpf, password: senha }),
-      });
-
-      
-      
-      if (!res.ok) {
-        const errorData = await res.json().catch(() => ({}));
-        setError(errorData.message || 'CPF ou senha inválidos');
-        return;
-      }
-
-      // Login bem-sucedido
-      router.push('/dashboard');
-    } catch (error) {
-      setError('Erro ao conectar com o servidor. Tente novamente.');
-      console.error('Erro no login:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  // Permitir login ao pressionar Enter
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !isLoading) {
-      handleSubmit();
-    }
   };
 
   return (
@@ -94,7 +51,7 @@ export default function Login() {
       <div className="hidden md:flex md:w-1/2 bg-gradient-to-br from-[#c8e6a0] to-[#a8d67a] items-center justify-center relative">
         <div className="text-center">
           <div className="flex items-center justify-center mb-2">
-            <Image loading='eager' src={logo} alt='Logo' sizes='100vw'/>
+            <Image loading='eager' src={logo} alt='Logo' sizes='50vw' style={{ width: 'auto', height: 'auto' }} />
           </div>
         </div>
       </div>
@@ -102,18 +59,21 @@ export default function Login() {
       {/* Lado Direito - Formulário de Login */}
       <div className="w-full md:w-1/2 flex items-center justify-center bg-gray-50 p-8">
         <div className="w-full max-w-md">
-          {/* Logo mobile */}
+          
+          {/* Logo Mobile */}
           <div className="md:hidden mb-8 text-center">
-            <div className="flex items-center justify-center mb-2">
-              <Image loading='eager' src={logo} alt='Logo' width={250} height={100} sizes='100vw' />
-            </div>
+             <div className="flex items-center justify-center mb-2">
+               <Image loading='eager' src={logo} alt='Logo' width={250} height={100} />
+             </div>
           </div>
             
-          <div className="space-y-6">
-            {/* Mensagem de erro */}
-            {error && (
+          {/* O form action aponta para o hook */}
+          <form action={formAction} className="space-y-6">
+            
+            {/* Mensagem de Erro vinda do Server Action */}
+            {state.status === 'error' && (
               <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg text-center text-sm">
-                {error}
+                {state.message}
               </div>
             )}
 
@@ -125,13 +85,12 @@ export default function Login() {
               <input
                 type="text"
                 id="cpf"
+                name="cpfColaborador" // Este name deve bater com o formData.get na action
                 value={cpf}
                 onChange={handleCpfChange}
-                onKeyPress={handleKeyPress}
-                maxLength={14}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#cceaad] transition text-center hover:shadow-[0_0_2px_2px_rgba(204,234,173,0.2)] focus:shadow-[0_0_2px_2px_rgba(204,234,173,0.2)]"
                 placeholder="000.000.000-00"
-                disabled={isLoading}
+                disabled={isPending} // Usa o isPending do hook
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#cceaad] transition text-center hover:shadow-[0_0_2px_2px_rgba(204,234,173,0.2)] focus:shadow-[0_0_2px_2px_rgba(204,234,173,0.2)]"
               />
             </div>
 
@@ -143,24 +102,24 @@ export default function Login() {
               <input
                 type="password"
                 id="senha"
+                name="senhaColaborador" // Name correto
                 value={senha}
-                onChange={handleSenhaChange}
-                onKeyPress={handleKeyPress}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#cceaad] transition text-center hover:shadow-[0_0_2px_2px_rgba(204,234,173,0.2)] focus:shadow-[0_0_2px_2px_rgba(204,234,173,0.2)]"
+                onChange={(e) => setSenha(e.target.value)}
                 placeholder="••••••••"
-                disabled={isLoading}
+                disabled={isPending}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#cceaad] transition text-center hover:shadow-[0_0_2px_2px_rgba(204,234,173,0.2)] focus:shadow-[0_0_2px_2px_rgba(204,234,173,0.2)]"
               />
             </div>
 
             {/* Botão Login */}
             <button
-              onClick={handleSubmit}
-              disabled={isLoading}
+              type="submit"
+              disabled={isPending} // Desabilita automaticamente enquanto a server action roda
               className="w-full bg-gradient-to-t from-[#61A914] to-[#7CD224] text-white font-medium py-3 px-2 rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-90 cursor-pointer tracking-wider uppercase shadow-md"
             >
-              {isLoading ? 'Entrando...' : 'login'}
+              {isPending ? 'ENTRANDO...' : 'LOGIN'}
             </button>
-          </div>
+          </form>
         </div>
       </div>
     </div>
