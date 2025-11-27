@@ -1,6 +1,6 @@
 'use client'; // Necessário se estiver usando Next.js App Router (devido ao useState)
 import React, { useState } from 'react';
-import SelectSetor from '@/src/components/buttons/SelectSetor';
+import SelectSetor from '@/src/components/forms/SelectSetor';
 import DashTotal from '@/src/components/dashboards/DashTotal';
 import { Search } from 'lucide-react'; // Opcional: ícones para os botões
 
