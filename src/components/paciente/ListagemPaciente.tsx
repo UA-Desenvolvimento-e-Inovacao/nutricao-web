@@ -115,7 +115,7 @@ function ListagemPaciente() {
                 className={`px-3 py-1 rounded-md text-sm font-medium transition-colors
                     ${paginaAtual === 1 
                     ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
-                    : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300 cursor-pointer'}`}
+                    : 'bg-white text-gray-700 hover:border-[#23470091] border border-gray-300 cursor-pointer'}`}
                 >
                 Anterior
                 </button>
@@ -126,7 +126,7 @@ function ListagemPaciente() {
                 className={`px-3 py-1 rounded-md text-sm font-medium transition-colors
                     ${paginaAtual === totalPaginas 
                     ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
-                    : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300 cursor-pointer'}`}
+                    : 'bg-white text-gray-700 hover:border-[#23470091] border border-gray-300 cursor-pointer'}`}
                 >
                 Próximo
                 </button>
