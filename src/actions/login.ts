@@ -38,7 +38,7 @@ export default async function login(prevState: LoginState, formData: FormData): 
     const res = await fetch('https://pesquisa.unimedararuama.com.br/api/login', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json', // CRUCIAL para evitar erro 400
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(payload),
     });

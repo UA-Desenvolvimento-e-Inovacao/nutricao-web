@@ -10,6 +10,7 @@ import login, { LoginState } from '@/src/actions/login'; // Importe a Action e o
 const initialState: LoginState = {
   status: null,
   message: '',
+  data: null
 };
 
 export default function Login() {
@@ -26,7 +27,7 @@ export default function Login() {
   useEffect(() => {
     if (state.status === 'success') {
       console.log('Login OK, dados:', state.data);
-      router.push('/dashboard'); // Redirecionamento no cliente
+      router.push('/paciente'); // Redirecionamento no cliente
     }
   }, [state.status, router, state.data]);
 

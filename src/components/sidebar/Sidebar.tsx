@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, startTransition } from 'react';
-import { ChevronDown, Users, Apple, FileText, ChevronLeft, ChevronRight, Tag, HandPlatter, Settings } from 'lucide-react';
+import { ChevronDown, Users, Apple, FileText, ChevronLeft, ChevronRight, Tag, HandPlatter, Settings, LogOut } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link'; // Importante: Usar Link ao invés de tag <a>
 import { usePathname } from 'next/navigation'; // Importante: Para pegar a rota atual
@@ -101,6 +101,10 @@ export default function Sidebar() {
     }
   };
 
+  async function logout() {
+    await fetch("/api/logout", { method: "POST" });
+    window.location.href = "/login";
+  }
   return (
     <nav 
       className={`
@@ -248,11 +252,18 @@ export default function Sidebar() {
               </div>
             </div>
 
-            <button 
+            {/* <button 
               className="p-2 hover:bg-gray-100 rounded-lg transition-colors cursor-pointer"
               title="Configurações"
             >
               <Settings size={20} color='#1D2A0F' className="text-gray-600" />
+            </button> */}
+            <button 
+              className="p-2 hover:bg-gray-100 rounded-lg transition-colors cursor-pointer"
+              title="Configurações"
+              onClick={logout}
+            >
+              <LogOut size={20} color='#1D2A0F' className="text-gray-600 ml-2" />
             </button>
           </div>
         )}

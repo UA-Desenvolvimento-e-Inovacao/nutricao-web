@@ -10,7 +10,7 @@ export default function Dashboard() {
     <div style={{ padding: 40 }}>
       <h1>Dashboard (Área Protegida)</h1>
 
-      <button onClick={logout}>Sair</button>
+      {/* <button onClick={logout}>Sair</button> */}
     </div>
   );
 }
