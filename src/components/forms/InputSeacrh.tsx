@@ -24,7 +24,7 @@ function InputSeacrh({searchValue, setSearcValue, ...props}: SearchProps) {
                 name={props.name}
                 id={props.name}
                 placeholder={props.place}
-                className='border border-[#77C526] focus:outline-none hover:shadow-[0_0_2px_2px_rgba(204,234,173,0.2)] focus:shadow-[0_0_2px_2px_rgba(204,234,173,0.2)] rounded p-2 pl-10 pr-2 w-64 text-gray-500'
+                className='border border-[#DADADA] shadow-sm focus:outline-none hover:shadow-[0_0_2px_2px_rgba(204,234,173,0.2)] focus:shadow-[0_0_2px_2px_rgba(204,234,173,0.2)] rounded p-2 pl-10 pr-2 w-64 text-gray-500'
                 value={searchValue}
                 onChange={({target})=>{setSearcValue(target.value)}}
             />
