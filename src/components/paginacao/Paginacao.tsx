@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 // T representa o "Tipo" do item (pode ser Paciente, Produto, Usuario...)
 // Dizemos que T deve ser um objeto (extends object)
 type ListaPaginadaProps<T> = {
-  itens: T[];
+  itensFiltro: T[];
   itensPorPagina?: number; // Opcional (com ?), pois definiremos valor padrão
   renderItem: (item: T) => React.ReactNode;
   emptyMessage?: string;
@@ -13,7 +13,7 @@ type ListaPaginadaProps<T> = {
 // Adicionamos <T extends { id?: string | number }> para garantir que
 // o item possa ter um ID, evitando erro na "key"
 export default function ListaPaginada<T extends { id?: string | number }>({ 
-  itens, 
+  itensFiltro, 
   itensPorPagina = 5, // Valor padrão definido aqui
   renderItem,
   emptyMessage = "Nenhum item encontrado." // Valor padrão
@@ -24,13 +24,13 @@ export default function ListaPaginada<T extends { id?: string | number }>({
   // Resetar página ao mudar filtros
   useEffect(() => {
     setPaginaAtual(1);
-  }, [itens]);
+  }, [itensFiltro]);
 
   // Cálculos
-  const totalPaginas = Math.ceil(itens.length / itensPorPagina);
+  const totalPaginas = Math.ceil(itensFiltro.length / itensPorPagina);
   const indiceUltimoItem = paginaAtual * itensPorPagina;
   const indicePrimeiroItem = indiceUltimoItem - itensPorPagina;
-  const itensAtuais = itens.slice(indicePrimeiroItem, indiceUltimoItem);
+  const itensAtuais = itensFiltro.slice(indicePrimeiroItem, indiceUltimoItem);
 
   const proximaPagina = () => {
     if (paginaAtual < totalPaginas) setPaginaAtual(prev => prev + 1);

@@ -117,7 +117,7 @@ function ListagemDietas() {
           <InputDate data={data} setData={setData}/>
       </div>
 
-      <ListaPaginada itens={dietasFiltradas} renderItem={
+      <ListaPaginada itensFiltro={dietasFiltradas} renderItem={
         (dieta: Dieta)=>{
           return (
             <ul>
