@@ -15,15 +15,16 @@ function ListagemPaciente() {
       { id: 85584, nome: "Paulo Mendes", idade: 45, sexo: "Masculino", motivoConsulta: "Retorno cardiologista", ativo: true, dieta: false },
       { id: 85333, nome: "Gustavo barreto", idade: 25, sexo: "Feminino", motivoConsulta: "Retorno cardiologista", ativo: true, dieta: true }
     ];
+    
   // Estado da Paginação
   const [paginaAtual, setPaginaAtual] = useState(1);
   const itensPorPagina = 5; 
 
-  const [searcPaciente, setSearchPaciente] = React.useState('')
+  const [searchcPaciente, setSearchPaciente] = React.useState('')
 
 
   const listFilterPaciente = listaDePacientes.filter((paciente)=>{
-    const searchPacData = paciente.nome.toLowerCase().includes(searcPaciente.toLowerCase()) || paciente.id.toString().includes(searcPaciente)
+    const searchPacData = paciente.nome.toLowerCase().includes(searchcPaciente.toLowerCase()) || paciente.id.toString().includes(searchcPaciente)
 
     return searchPacData
   })
@@ -62,11 +63,11 @@ function ListagemPaciente() {
         />
             <input
                 type="search"
-                name="searcpac"
-                id="searcpac"
+                name="searchcpac"
+                id="searchcpac"
                 placeholder='Buscar Paciente'
                 className='border border-[#77C526] focus:outline-none hover:shadow-[0_0_2px_2px_rgba(204,234,173,0.2)] focus:shadow-[0_0_2px_2px_rgba(204,234,173,0.2)] rounded p-2 pl-10 pr-2 w-64 text-gray-500'
-                value={searcPaciente}
+                value={searchcPaciente}
                 onChange={({target})=>{setSearchPaciente(target.value)}}
             />
         

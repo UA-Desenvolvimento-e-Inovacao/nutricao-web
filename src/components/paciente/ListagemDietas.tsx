@@ -2,12 +2,25 @@
 import React from 'react'
 import InputSeacrh from '../forms/InputSeacrh'
 import InputDate from '../forms/InputDate'
+import ListaPaginada from '../paginacao/Paginacao'
+
+
+interface Dieta {
+  id: number;
+  tipo: string;
+  modalidade: string;
+  paciente: string;
+  data: string;
+  horario: string;
+}
 
 function ListagemDietas() {
     const [busca, setBusca] = React.useState('')
     const [data, setData] = React.useState(new Date().toISOString().slice(0, 10))
 
-    const dietas = [
+    
+
+    const dietas: Dieta[] = [
     {
         id: 26411,
       tipo: "Dieta Zero",
@@ -89,45 +102,74 @@ function ListagemDietas() {
       horario: "13:00"
     }
   ];
-    // function formatarParaISO(dataBr: string) {
-    //   const [dia, mes, ano] = dataBr.split("-");
-    //   return `${ano}-${mes}-${dia}`;
-    // }
-  
+
+  const dietasFiltradas = dietas.filter((dieta: Dieta)=>{
+    const dados = busca.toLowerCase();
+    return dieta.paciente.toLowerCase().includes(dados) ||
+    dieta.tipo.toLowerCase().includes(dados)
+  })
+
+
   return (
     <section className='flex flex-col gap-4 h-full px-6 py-20'>
-        <div className='flex items-center justify-between'>
-            <InputSeacrh searchValue={busca} setSearcValue={setBusca} name='buscaDieta' place='Buscar por Dieta'/>
-            <InputDate data={data} setData={setData}/>
-        </div>
+      <div className='flex items-center justify-between'>
+          <InputSeacrh searchValue={busca} setSearcValue={setBusca} name='buscaDieta' place='Buscar por Dieta'/>
+          <InputDate data={data} setData={setData}/>
+      </div>
 
-    <div>
-        <ul>
-            {
-                dietas.map((dieta)=>{
-                    return (
-                        <li
-                            key={dieta.id}
-                            className="flex flex-row items-center justify-between px-4 gap-4 md:gap-8 my-2 bg-white border-l-4 border-gray-200 px-2 p-1 rounded cursor-pointer 
-                            hover:border-[#77C526] transition-colors duration-200 shadow hover:shadow-md [&_*]:text-gray-500"
-                        >
-                            <div className='flex flex-col font-medium'>
-                                <span className='text-sm'>{dieta.tipo}</span>
-                                <span>{dieta.paciente}</span>
-                            </div>
-                            <div>
-                                <span>{dieta.modalidade}</span>
-                                <div className='flex flex-col items-center **:text-sm'>
-                                    <span>{dieta.data}</span>
-                                    <span>{dieta.horario}</span>
-                                </div>
-                            </div>
-                        </li>
-                    )
-                })
-            }
-        </ul>
-    </div>
+      <ListaPaginada itens={dietasFiltradas} renderItem={
+        (dieta: Dieta)=>{
+          return (
+            <ul>
+                <li
+                              key={dieta.id}
+                              className="flex flex-row items-center justify-between px-4 gap-4 md:gap-8 my-2 bg-white border-l-4 border-gray-200 px-2 p-1 rounded cursor-pointer 
+                              hover:border-[#77C526] transition-colors duration-200 shadow hover:shadow-md [&_*]:text-gray-500"
+                          >
+                              <div className='flex flex-col font-medium'>
+                                  <span className='text-sm'>{dieta.tipo}</span>
+                                  <span>{dieta.paciente}</span>
+                              </div>
+                              <div>
+                                  <span>{dieta.modalidade}</span>
+                                  <div className='flex flex-col items-center **:text-sm'>
+                                      <span>{dieta.data}</span>
+                                      <span>{dieta.horario}</span>
+                                  </div>
+                              </div>
+                          </li>
+            </ul>
+          )
+        }
+      }/>
+
+      {/* <div>
+          <ul>
+              {
+                  dietas.map((dieta)=>{
+                      return (
+                          <li
+                              key={dieta.id}
+                              className="flex flex-row items-center justify-between px-4 gap-4 md:gap-8 my-2 bg-white border-l-4 border-gray-200 px-2 p-1 rounded cursor-pointer 
+                              hover:border-[#77C526] transition-colors duration-200 shadow hover:shadow-md [&_*]:text-gray-500"
+                          >
+                              <div className='flex flex-col font-medium'>
+                                  <span className='text-sm'>{dieta.tipo}</span>
+                                  <span>{dieta.paciente}</span>
+                              </div>
+                              <div>
+                                  <span>{dieta.modalidade}</span>
+                                  <div className='flex flex-col items-center **:text-sm'>
+                                      <span>{dieta.data}</span>
+                                      <span>{dieta.horario}</span>
+                                  </div>
+                              </div>
+                          </li>
+                      )
+                  })
+              }
+          </ul>
+      </div> */}
     </section>
   )
 }
