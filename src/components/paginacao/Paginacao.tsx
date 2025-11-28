@@ -41,7 +41,7 @@ export default function ListaPaginada<T extends { id?: string | number }>({
   };
 
   return (
-    <div className='flex flex-col flex-1 min-h-0'>
+    <div className='flex flex-col flex-1 h-screen'>
       {/* <ul className="flex-1 overflow-auto p-2"> */}
         {itensAtuais.length > 0 ? (
           itensAtuais.map((item, index) => (

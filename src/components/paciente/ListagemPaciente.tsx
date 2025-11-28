@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import SelectSetor from '@/src/components/forms/SelectSetor';
 import DashTotal from '@/src/components/dashboards/DashTotal';
 import { Search } from 'lucide-react'; // Opcional: ícones para os botões
+import InputSeacrh from '../forms/InputSeacrh';
+import ListaPaginada from '../paginacao/Paginacao';
 
 function ListagemPaciente() {
    const listaDePacientes = [
@@ -54,32 +56,14 @@ function ListagemPaciente() {
         <DashTotal descricao='Total de Dietas' total={listaDePacientes.filter(pac => pac.dieta === true).length} />
       </div>
 
-        <div className="relative w-56 ml-auto mr-10">
-        <Search 
-            className="absolute left-3 top-1/2 transform 
-                    -translate-y-1/2 text-gray-400 
-                    pointer-events-none" 
-            size={18} 
-        />
-            <input
-                type="search"
-                name="searchcpac"
-                id="searchcpac"
-                placeholder='Buscar Paciente'
-                className='border border-[#77C526] focus:outline-none hover:shadow-[0_0_2px_2px_rgba(204,234,173,0.2)] focus:shadow-[0_0_2px_2px_rgba(204,234,173,0.2)] rounded p-2 pl-10 pr-2 w-64 text-gray-500'
-                value={searchcPaciente}
-                onChange={({target})=>{setSearchPaciente(target.value)}}
-            />
-        
-        </div>
+        <InputSeacrh searchValue={searchcPaciente} setSearcValue={setSearchPaciente} name='buscaPaciente' place='Buscar por Paciente'/>
       
 
-      <div className='flex-1 flex flex-col'> 
-        {/* Ajustei a altura para flex-1 para ocupar o espaço restante e evitar scrollduplo se possível */}
-        <ul className="flex-1 overflow-auto p-2 min-h-0">
-          {itensAtuais.map((paciente) => { 
-            return (
-              <li
+      
+        
+        <ListaPaginada itensFiltro={listFilterPaciente} renderItem={(paciente)=>{
+          return (
+            <li
                 key={paciente.id}
                 className="flex flex-row items-center gap-4 md:gap-8 my-2 bg-white border-l-4 border-gray-200 px-2 p-1 rounded cursor-pointer 
                   hover:border-[#77C526] transition-colors duration-200 shadow hover:shadow-md"
@@ -93,49 +77,8 @@ function ListagemPaciente() {
                   <p className="text-gray-500 text-sm">{paciente.id}</p>
                 </div>
               </li>
-            )
-          })}
-          
-          {/* Feedback visual se a lista estiver vazia ou se a página não tiver itens */}
-          {itensAtuais.length === 0 && (
-            <p className="text-center text-gray-400 mt-4">Nenhum paciente encontrado.</p>
-          )}
-        </ul>
-
-        {/* 3. Controles de Paginação (Footer) */}
-        {totalPaginas > 1 && (
-            <div className="flex items-center justify-between px-4 py-3 border-t border-gray-200 mt-2">
-            <span className="text-sm text-gray-500">
-                Página <span className="font-semibold text-gray-900">{paginaAtual}</span> de <span className="font-semibold text-gray-900">{totalPaginas}</span>
-            </span>
-            
-            <div className="flex gap-2">
-                <button
-                onClick={paginaAnterior}
-                disabled={paginaAtual === 1}
-                className={`px-3 py-1 rounded-md text-sm font-medium transition-colors
-                    ${paginaAtual === 1 
-                    ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
-                    : 'bg-white text-gray-700 hover:border-[#23470091] border border-gray-300 cursor-pointer'}`}
-                >
-                Anterior
-                </button>
-                
-                <button
-                onClick={proximaPagina}
-                disabled={paginaAtual === totalPaginas}
-                className={`px-3 py-1 rounded-md text-sm font-medium transition-colors
-                    ${paginaAtual === totalPaginas 
-                    ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
-                    : 'bg-white text-gray-700 hover:border-[#23470091] border border-gray-300 cursor-pointer'}`}
-                >
-                Próximo
-                </button>
-            </div>
-            </div>
-        )}
-      </div>
-
+          )
+        }}/>
     </section>
   )
 }
