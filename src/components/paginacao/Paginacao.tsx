@@ -57,7 +57,7 @@ export default function ListaPaginada<T extends { id?: string | number }>({
 
       {/* Footer só aparece se tiver mais de 1 página */}
       {totalPaginas > 1 && (
-        <div className="flex items-center justify-between px-4 py-3 border-t border-gray-200 mt-2">
+        <div className="mt-auto flex items-center justify-between px-4 pt-4.5 border-t border-gray-200">
           <span className="text-sm text-gray-500">
             Página <span className="font-semibold text-gray-900">{paginaAtual}</span> de <span className="font-semibold text-gray-900">{totalPaginas}</span>
           </span>
@@ -86,6 +86,7 @@ export default function ListaPaginada<T extends { id?: string | number }>({
             </button>
           </div>
         </div>
+
       )}
     </div>
   );

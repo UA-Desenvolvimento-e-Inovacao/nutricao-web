@@ -3,6 +3,7 @@ import React from 'react'
 import InputSeacrh from '../forms/InputSeacrh'
 import InputDate from '../forms/InputDate'
 import ListaPaginada from '../paginacao/Paginacao'
+import DashTotal from '../dashboards/DashTotal'
 
 
 interface Dieta {
@@ -111,7 +112,8 @@ function ListagemDietas() {
 
 
   return (
-    <section className='flex flex-col gap-4 h-full px-6 py-20'>
+    <section className='flex flex-col gap-4 h-full px-6 '>
+      <DashTotal descricao='Total de Dietas' total={dietas.length}/>
       <div className='flex items-center justify-between'>
           <InputSeacrh searchValue={busca} setSearcValue={setBusca} name='buscaDieta' place='Buscar por Dieta'/>
           <InputDate data={data} setData={setData}/>
@@ -122,22 +124,22 @@ function ListagemDietas() {
           return (
             <ul>
                 <li
-                              key={dieta.id}
-                              className="flex flex-row items-center justify-between px-4 gap-4 md:gap-8 my-2 bg-white border-l-4 border-gray-200 px-2 p-1 rounded cursor-pointer 
-                              hover:border-[#77C526] transition-colors duration-200 shadow hover:shadow-md [&_*]:text-gray-500"
-                          >
-                              <div className='flex flex-col font-medium'>
-                                  <span className='text-sm'>{dieta.tipo}</span>
-                                  <span>{dieta.paciente}</span>
-                              </div>
-                              <div>
-                                  <span>{dieta.modalidade}</span>
-                                  <div className='flex flex-col items-center **:text-sm'>
-                                      <span>{dieta.data}</span>
-                                      <span>{dieta.horario}</span>
-                                  </div>
-                              </div>
-                          </li>
+                    key={dieta.id}
+                    className="flex flex-row items-center justify-between px-4 gap-4 md:gap-4 my-2 bg-white border-l-4 border-gray-200 p-1 rounded cursor-pointer 
+                    hover:border-[#77C526] transition-colors duration-200 shadow hover:shadow-md [&_*]:text-gray-500"
+                >
+                    <div className='flex flex-col font-medium'>
+                        <span className='text-sm'>{dieta.tipo}</span>
+                        <span>{dieta.paciente}</span>
+                    </div>
+                    <div>
+                        <span>{dieta.modalidade}</span>
+                        <div className='flex flex-col items-center **:text-sm'>
+                            <span>{dieta.data}</span>
+                            <span>{dieta.horario}</span>
+                        </div>
+                    </div>
+                </li>
             </ul>
           )
         }
